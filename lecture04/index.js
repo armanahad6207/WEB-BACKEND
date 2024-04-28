@@ -13,6 +13,15 @@ app.get("/", function (req, res) {
     res.render("index", { files: files });
   });
 });
+app.get("/files/:filename", (req, res) => {
+  fs.readFile(`./files/${req.params.filename}`, "utf-8", (err, filedata) => {
+    res.render("showdata", {
+      filename: req.params.filename,
+      filedata: filedata,
+    });
+  });
+});
+
 app.post("/create", (req, res) => {
   fs.writeFile(
     `./files/${req.body.title.split(" ").join("")}.txt`,

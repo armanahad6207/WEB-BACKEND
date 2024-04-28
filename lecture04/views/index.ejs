@@ -9,13 +9,15 @@
   <body>
     <div class="main w-full min-h-screen bg-zinc-900">
       <div class="form p-10 text-white">
-        <form action="/create" method="post">
+        <form action="/create" method="post" onsubmit="return validateForm()">
           <input
             class="block bg-zinc-700 my-5 p-3 rounded-md w-full outline-none"
             type="text"
             placeholder="title goes here"
             name="title"
+            id="titlename"
           />
+
           <textarea
             class="block block bg-zinc-700 resize-none my-5 p-3 rounded-md w-full outline-none"
             placeholder="write your task details"
@@ -33,7 +35,9 @@
         <% if(files.length>0){ %> <% files.forEach((val)=>{%>
         <div class="task min-w-72 bg-zinc-700 p-2">
           <h3 class="text-white text-3xl tracking-tighter"><%= val%></h3>
-          <a class="text-blue-500 block mt-3" href="">read more..</a>
+          <a class="text-blue-500 block mt-3" href="./files/<%= val%>"
+            >read more..</a
+          >
         </div>
 
         <%});%> <% }else{%>
@@ -41,5 +45,15 @@
         <%} %>
       </div>
     </div>
+    <script>
+      function validateForm() {
+        let title = document.querySelector("#titlename").value;
+        if (title === "") {
+          alert("write title");
+          return false;
+        }
+        return true;
+      }
+    </script>
   </body>
 </html>

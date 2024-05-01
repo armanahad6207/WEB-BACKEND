@@ -34,4 +34,20 @@ app.get("/delete/:id", async (req, res) => {
   res.redirect("/read");
 });
 
+// edit feature
+
+app.get("/edit/:_id", async (req, res) => {
+  let user = await userModel.findOne({ _id: req.params._id });
+  res.render("edit", { user });
+});
+app.post("/update/:_id", async (req, res) => {
+  let { image, name, email } = req.body;
+  await userModel.findOneAndUpdate(
+    { _id: req.params._id },
+    { image, name, email },
+    { new: true }
+  );
+  res.redirect("/read");
+});
+
 app.listen(3000);

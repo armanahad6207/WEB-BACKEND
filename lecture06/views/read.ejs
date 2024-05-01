@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./stylesheets/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+  </head>
+  <body>
+    <div class="w-full min-h-full bg-zinc-800 text-white  p-12">
+        <a class=" block text-blue-500 mb-5" href="/"> GO BACK HOME</a>
+        <h1 class=" inline text-3xl font-bold text-yellow-500">All Users</h1>
+       <div class="users grid grid-cols-3">
+        <% if(users.length >0) { %>
+            <% users.forEach((user)=>{ %>
+                <div class=" user w-72 bg-zinc-400 p-4 rounded-lg mt-12"> 
+                    <div class="w-full h-52 bg-yellow-200 rounded-lg">
+                        <img class="w-full h-full object-cover" src="<%= user.image%>" alt="">
+                    </div>
+                    <h1 class="text-xl text-black tracking-tighter"><%= user.name%></h1>
+                    <p class="tracking-tighter text-zinc-500 leading-3"><%= user.email%></p>
+                    <div class="mt-10 flex gap-5">
+                        <a class="text-blue-700" href="">Edit User</a>
+                        <a class="text-red-700" href="/delete/<%= user._id%>">Delete User</a>
+                    </div>
+        
+                </div>
+           <% })%>
+        
+       <% } else { %>
+          <div class=" ">
+            <h1 class="text-center text-3xl text-zinc-500">No USERS FOUND!!!</h1>
+          </div>
+      <% }%>
+      
+       
+       
+       
+
+       </div>
+    </div>
+  </body>
+</html>

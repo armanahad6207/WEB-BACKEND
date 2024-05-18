@@ -1,29 +1,51 @@
 const express = require("express"); //third party package
+let app = express();
 const mongo = require("mongodb");
 const MongoClient = mongo.MongoClient;
-let app = express();
-const url = "mongodb://127.0.0.1:27017";
+let PORT = 3000;
+const MONGO_URL = "mongodb://127.0.0.1:27017";
 let db;
 
 app.get("/", (req, res) => {
   res.send(" weilcome to my own server");
 });
 
-app.get("/location", async (req, res) => {
-  try {
-    const locations = await db.collection("location").find().toArray();
-    res.send(locations);
-  } catch (err) {
-    console.error("Failed to fetch locations:", err);
-    res.status(500).send("Failed to fetch locations");
-  }
+//get the locations data
+
+app.get("/location", (req, res) => {
+  db.collection("locations")
+    .find()
+    .toArray((err, result) => {
+      if (err) throw err;
+      res.send(result);
+    });
 });
 
-MongoClient.connect(url, (err, client) => {
-  console.log("connected success fully");
-  if (err) console.log("something wrong");
+//get the mealtype data
+
+app.get("/mealtype", (req, res) => {
+  db.collection("mealType")
+    .find()
+    .toArray((err, result) => {
+      res.send(result);
+    });
+});
+
+//get the restaurant data
+app.get("/restaurant", (req, res) => {
+  db.collection("restaurants")
+    .find()
+    .toArray((err, result) => {
+      res.send(result);
+    });
+});
+
+//mongodb connection
+MongoClient.connect(MONGO_URL, (err, client) => {
+  console.log("mongodb is connected");
+  if (err) console.log("error while connecting");
   db = client.db("Zomato-Application");
-  app.listen(3000, () => {
-    console.log("server started on the port 3000");
+  app.listen(PORT, () => {
+    console.log("Server started successfully");
   });
 });

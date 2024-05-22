@@ -31,10 +31,19 @@ app.get("/mealtype", (req, res) => {
     });
 });
 
-//get the restaurant data
+//get the restaurant data through stateid amd mealid
 app.get("/restaurant", (req, res) => {
+  let query = {};
+  let stateId = Number(req.query.state_id);
+  let mealId = Number(req.query.mealId);
+  if (stateId) {
+    query = { state_id: stateId };
+  } else if (mealId) {
+    query = { "mealTypes.mealtype_id": mealId };
+  }
+
   db.collection("restaurants")
-    .find()
+    .find(query)
     .toArray((err, result) => {
       res.send(result);
     });

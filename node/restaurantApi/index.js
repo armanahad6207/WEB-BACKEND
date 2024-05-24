@@ -45,6 +45,15 @@ app.get("/restaurant", (req, res) => {
   db.collection("restaurants")
     .find(query)
     .toArray((err, result) => {
+      if (err) throw err;
+      res.send(result);
+    });
+});
+app.get("/filter", (req, res) => {
+  db.collection("restaurants")
+    .find()
+    .toArray((err, result) => {
+      if (err) throw err;
       res.send(result);
     });
 });

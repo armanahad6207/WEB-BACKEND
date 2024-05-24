@@ -16,3 +16,5 @@ http://localhost:3000/restaurant?state_id=1
 
 restauran wrt mealid
 http://localhost:3000/restaurant?mealId=6
+
+restuarant wrt cuisine and meal

@@ -18,3 +18,10 @@ restauran wrt mealid
 http://localhost:3000/restaurant?mealId=6
 
 restuarant wrt cuisine and meal
+http://localhost:3000/filter/3?cuisineId=3
+
+restaurant wrt cost and meal
+http://localhost:3000/filter/3?lcost=400&&hcost=600
+
+restaurant wrt sort
+http://localhost:3000/filter/1?lcost=400&&hcost=1000&sort=1

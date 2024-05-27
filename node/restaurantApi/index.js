@@ -49,6 +49,8 @@ app.get("/restaurant", (req, res) => {
       res.send(result);
     });
 });
+
+// filter meal by mealId
 app.get("/filter/:mealId", (req, res) => {
   let query = {};
   let mealId = Number(req.params.mealId);
@@ -78,6 +80,47 @@ app.get("/filter/:mealId", (req, res) => {
       if (err) throw err;
       res.send(result);
     });
+});
+
+// restaurant Details
+
+app.get("/details/:id", (req, res) => {
+  let id = Number(req.params.id);
+  db.collection("restaurants")
+    .find({
+      restaurant_id: id,
+    })
+    .toArray((err, result) => {
+      if (err) throw err;
+      res.send(result);
+    });
+});
+
+//menu details
+
+app.get("/menu/:id", (req, res) => {
+  let id = Number(req.params.id);
+  db.collection("RestaurantMenu")
+    .find({ restaurant_id: id })
+    .toArray((err, result) => {
+      if (err) throw err;
+      res.send(result);
+    });
+});
+
+// menu item
+
+app.post("/menuItem", (req, res) => {
+  if (Array.isArray(req.body)) {
+    db.collection("RestaurantMenu")
+      .find({ menu_id: { $in: req.body } })
+      .toArray((err, result) => {
+        if (err) throw err;
+        res.send(result);
+      });
+  } else {
+    res.send("invalid input");
+  }
 });
 
 //mongodb connection

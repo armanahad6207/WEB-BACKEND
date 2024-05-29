@@ -37,6 +37,7 @@ http://localhost:3000/menu/2
 ## page 4
 
 menu details
+http://localhost:3000/menu/2
 
 placeorder
 

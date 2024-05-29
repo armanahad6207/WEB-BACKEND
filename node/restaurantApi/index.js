@@ -123,6 +123,10 @@ app.post("/menuItem", (req, res) => {
   }
 });
 
+// get order
+
+app.get("/order/:id", (req, res) => {});
+
 //mongodb connection
 MongoClient.connect(MONGO_URL, (err, client) => {
   console.log("mongodb is connected");

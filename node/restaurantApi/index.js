@@ -5,6 +5,7 @@ const MongoClient = mongo.MongoClient;
 let PORT = 3000;
 const MONGO_URL = "mongodb://127.0.0.1:27017";
 let db;
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send(" weilcome to my own server");
@@ -112,21 +113,75 @@ app.get("/menu/:id", (req, res) => {
 
 app.post("/menuItem", (req, res) => {
   if (Array.isArray(req.body)) {
-    db.collection("RestaurantMenu")
-      .find({ menu_id: { $in: req.body } })
-      .toArray((err, result) => {
+    db.collection("RestaurantMenu").find({ menu_id: { $in: req.body } })(
+      (err, result) => {
         if (err) throw err;
         res.send(result);
-      });
+      }
+    );
   } else {
     res.send("invalid input");
   }
 });
 
+//placeorder
+
+app.get("/placeorder", (req, res) => {
+  console.log(req.body);
+  db.collection("OrderList").insertOne(req.body, (err) => {
+    if (err) throw err;
+    res.send("Order Placed");
+  });
+});
+
 // get order
 
-app.get("/order/:id", (req, res) => {});
+app.get("/orders", (req, res) => {
+  let query = {};
+  let email = req.query.email;
+  if (email) {
+    query = { email };
+  }
 
+  db.collection("OrderList")
+    .find(query)
+    .toArray((err, result) => {
+      if (err) throw err;
+      res.send(result);
+    });
+});
+
+//update payment Details
+
+app.put("/updateOrder/:id", (req, res) => {
+  let oid = Number(req.params.id);
+
+  db.collection("OrderList").updateOne(
+    { orderId: oid },
+    {
+      $set: {
+        status: req.body.status,
+        bank_name: req.body.bank_name,
+        date: req.body.date,
+      },
+    },
+    (err, result) => {
+      if (err) throw err;
+      res.send("Order Updated Succesfully");
+    }
+  );
+});
+
+//deleted order
+
+app.delete("/deleteOrder/:id", (req, res) => {
+  let oid = Number(req.params.id);
+
+  db.collection("OrderList").deleteOne({ orderId: oid }, (err, result) => {
+    if (err) throw err;
+    res.send(` this order id is (${oid}) deleted Successfully`);
+  });
+});
 //mongodb connection
 MongoClient.connect(MONGO_URL, (err, client) => {
   console.log("mongodb is connected");

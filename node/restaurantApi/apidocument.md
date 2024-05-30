@@ -36,17 +36,30 @@ http://localhost:3000/menu/2
 
 ## page 4
 
-menu details
+menu items[POST]
 http://localhost:3000/menu/2
 
-placeorder
+placeorder[POST]
+http://localhost:3000/placeorder
 
 ## page 5
 
 list of order
+http://localhost:3000/orders
 
 list of order wrt mail
+http://localhost:3000/orders?email=jack@gmail.com
 
 update payment details
+http://localhost:3000/updateOrder/2
 
 delete orders
+
+http://localhost:3000/deleteOrder/3
+
+## C R U D ---------
+
+C-CREATE => POST
+R-READ => GET
+U-UPDATE => PUT
+D-DELETE => DELETE
